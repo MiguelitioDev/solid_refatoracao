@@ -1,0 +1,23 @@
+# Java compilado
+*.class
+
+# Diretorios de compilacao
+out/
+bin/
+target/
+src/solid*
+src/exer*
+
+# Arquivos locais gerados pelo jogo
+ranking.json
+ranking-solid-exercicio10.json
+
+# Configuracoes locais do VS Code
+.vscode/
+CARLOS_IMPLEMENTATION.md
+LUCAS_IMPLEMENTATION.md
+MIGUEL_IMPLEMENTATION.md
+PEDRO_IMPLEMENTATION.md
+OBJETIVO.md
+
+
