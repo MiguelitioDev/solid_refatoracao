@@ -1,0 +1,52 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+
+package "solidexercicio10" {
+  class Main
+}
+
+package "solidexercicio10.service" {
+  class JogoService
+}
+
+package "solidexercicio10.presentation" {
+  class MapaRenderer
+}
+
+package "solidexercicio10.model" {
+  class Missao
+  class Nave
+  class Passageiro
+  class EntidadeMapa
+  enum Dificuldade
+}
+
+package "solidexercicio10.repository" {
+  interface RankingRepository <<interface>>
+  class RankingService
+  class RankingEntry
+}
+
+Main ..> JogoService : "instancia e inicia"
+Main ..> RankingService : "instancia (Composition Root)"
+Main ..> RankingRepository : "injeta"
+
+JogoService --> RankingRepository : "depende da abstracao (DIP)"
+RankingService ..|> RankingRepository : "implementa detalhe I/O"
+RankingService ..> RankingEntry : "cria registros"
+
+JogoService --> MapaRenderer : "delega desenho"
+JogoService --> Missao : "orquestra regras"
+JogoService ..> Dificuldade : "configura partida"
+
+MapaRenderer ..> Missao : "consulta estado visual"
+RankingRepository ..> Dificuldade : "armazena nivel"
+
+note bottom of RankingRepository
+  <b>Principio da Inversao de Dependencia (DIP)</b>
+  O servico de regras de negocio depende do contrato
+  RankingRepository, e nunca do arquivo direto.
+end note
+
+@enduml

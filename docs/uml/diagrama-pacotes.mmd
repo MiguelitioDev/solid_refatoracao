@@ -1,0 +1,47 @@
+```mermaid
+graph TD
+    classDef pkg fill:#f8fafc,stroke:#334155,stroke-width:2px;
+    classDef cls fill:#f1f5f9,stroke:#475569,stroke-width:1.5px;
+    classDef iface fill:#eff6ff,stroke:#2563eb,stroke-width:2px,stroke-dasharray: 5 5;
+
+    subgraph solidexercicio10 [solidexercicio10]
+        Main[Main]:::cls
+    end
+
+    subgraph solidexercicio10_service [solidexercicio10.service]
+        JogoService[JogoService]:::cls
+    end
+
+    subgraph solidexercicio10_presentation [solidexercicio10.presentation]
+        MapaRenderer[MapaRenderer]:::cls
+    end
+
+    subgraph solidexercicio10_model [solidexercicio10.model]
+        Missao[Missao]:::cls
+        Nave[Nave]:::cls
+        Passageiro[Passageiro]:::cls
+        EntidadeMapa[EntidadeMapa]:::cls
+        Dificuldade["&lt;&lt;enum&gt;&gt; Dificuldade"]:::cls
+    end
+
+    subgraph solidexercicio10_repository [solidexercicio10.repository]
+        RankingRepository["&lt;&lt;interface&gt;&gt;<br/>RankingRepository"]:::iface
+        RankingService[RankingService]:::cls
+        RankingEntry[RankingEntry]:::cls
+    end
+
+    Main -.->|instancia e inicia| JogoService
+    Main -.->|Composition Root| RankingService
+    Main -.->|injeta| RankingRepository
+
+    JogoService ==>|depende da abstracao DIP| RankingRepository
+    RankingService -.->|implementa detalhe I/O| RankingRepository
+    RankingService -.->|cria registros| RankingEntry
+
+    JogoService -->|delega desenho SRP| MapaRenderer
+    JogoService -->|orquestra regras| Missao
+    JogoService -.->|configura partida| Dificuldade
+
+    MapaRenderer -.->|consulta estado visual| Missao
+    RankingRepository -.->|armazena nivel| Dificuldade
+```
