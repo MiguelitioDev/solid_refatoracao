@@ -9,10 +9,12 @@ public abstract class EntidadeMapa implements Posicionavel {
         this.y = y;
     }
 
+    @Override
     public int getX() {
         return x;
     }
 
+    @Override
     public int getY() {
         return y;
     }

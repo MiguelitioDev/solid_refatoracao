@@ -5,11 +5,13 @@ public class Inimigo extends EntidadeMapa implements Movel {
         super(x, y);
     }
 
+    @Override
     public void mover(int dx, int dy) {
-        x += dx;
-        y += dy;
+        this.x += dx;
+        this.y += dy;
     }
 
+    @Override
     public String getSimbolo() {
         return "X";
     }

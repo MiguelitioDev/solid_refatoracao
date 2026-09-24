@@ -5,6 +5,7 @@ public class Asteroide extends EntidadeMapa {
         super(x, y);
     }
 
+    @Override
     public String getSimbolo() {
         return "#";
     }

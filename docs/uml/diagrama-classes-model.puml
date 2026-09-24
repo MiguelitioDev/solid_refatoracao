@@ -1,0 +1,126 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam monochrome true
+skinparam packageStyle rectangle
+
+package "solidexercicio10.model" {
+
+  interface Posicionavel <<interface>> {
+    + getX(): int
+    + getY(): int
+  }
+
+  interface Movel <<interface>> {
+    + mover(dx: int, dy: int): void
+  }
+
+  enum Dificuldade <<enum>> {
+    FACIL
+    MEDIO
+    DIFICIL
+    + {static} deString(valor: String): Dificuldade
+  }
+
+  abstract class EntidadeMapa {
+    # x: int
+    # y: int
+    # EntidadeMapa(x: int, y: int)
+    + getX(): int
+    + getY(): int
+    + {abstract} getSimbolo(): String
+  }
+
+  abstract class Passageiro {
+    - nome: String
+    - tipo: String
+    # Passageiro(nome: String, tipo: String, x: int, y: int)
+    + getNome(): String
+    + getTipo(): String
+    + {abstract} getPontuacao(): int
+  }
+
+  class Professor {
+    + Professor(nome: String, x: int, y: int)
+    + getPontuacao(): int
+    + getSimbolo(): String
+  }
+
+  class Engenheiro {
+    + Engenheiro(nome: String, x: int, y: int)
+    + getPontuacao(): int
+    + getSimbolo(): String
+  }
+
+  class Astronauta {
+    + Astronauta(nome: String, x: int, y: int)
+    + getPontuacao(): int
+    + getSimbolo(): String
+  }
+
+  class Asteroide {
+    + Asteroide(x: int, y: int)
+    + getSimbolo(): String
+  }
+
+  class Inimigo {
+    + Inimigo(x: int, y: int)
+    + mover(dx: int, dy: int): void
+    + getSimbolo(): String
+  }
+
+  class Nave {
+    - nome: String
+    - passageiros: List<Passageiro>
+    - capacidade: int
+    - vidas: int
+    + Nave(nome: String, x: int, y: int, capacidade: int)
+    + getNome(): String
+    + getVidas(): int
+    + getCapacidade(): int
+    + getPassageiros(): List<Passageiro>
+    + embarcar(p: Passageiro): void
+    + perderVida(): void
+    + mover(dx: int, dy: int): void
+    + getSimbolo(): String
+    + moverComLimites(c: char, minX: int, maxX: int, minY: int, maxY: int): void
+  }
+
+  class Missao {
+    - nave: Nave
+    - passageiros: List<Passageiro>
+    - asteroides: List<Asteroide>
+    - inimigos: List<Inimigo>
+    + Missao(nave: Nave)
+    + getNave(): Nave
+    + getPassageiros(): List<Passageiro>
+    + getAsteroides(): List<Asteroide>
+    + getInimigos(): List<Inimigo>
+    + adicionarPassageiro(p: Passageiro): void
+    + adicionarAsteroide(a: Asteroide): void
+    + adicionarInimigo(i: Inimigo): void
+    + passagemNaPosicao(): Passageiro
+    + embarcarPassageiroNaPosicao(): boolean
+    + moverInimigos(r: Random, minX: int, maxX: int, minY: int, maxY: int): void
+    + verificaColisao(): boolean
+    + todosEmbarcados(): boolean
+    - mesmaPosicao(a: Posicionavel, b: Posicionavel): boolean
+  }
+
+  EntidadeMapa ..|> Posicionavel
+  Passageiro --|> EntidadeMapa
+  Professor --|> Passageiro
+  Engenheiro --|> Passageiro
+  Astronauta --|> Passageiro
+  Asteroide --|> EntidadeMapa
+  Inimigo --|> EntidadeMapa
+  Inimigo ..|> Movel
+  Nave --|> EntidadeMapa
+  Nave ..|> Movel
+
+  Missao "1" o-- "1" Nave : nave
+  Missao "1" o-- "*" Passageiro : passageiros
+  Missao "1" o-- "*" Asteroide : asteroides
+  Missao "1" o-- "*" Inimigo : inimigos
+  Nave "1" o-- "*" Passageiro : embarcados
+}
+@enduml

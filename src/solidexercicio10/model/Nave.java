@@ -41,31 +41,32 @@ public class Nave extends EntidadeMapa implements Movel {
         vidas = Math.max(0, vidas - 1);
     }
 
+    @Override
     public void mover(int dx, int dy) {
-        x += dx;
-        y += dy;
+        this.x += dx;
+        this.y += dy;
     }
 
+    @Override
     public String getSimbolo() {
         return "@";
     }
 
-    public void moverComLimites(char c, int minX, int maxX, int minY, int maxY) {
+    public void moverComLimites(char comando, int minX, int maxX, int minY, int maxY) {
         int dx = 0;
         int dy = 0;
-        switch (c) {
+        switch (comando) {
             case 'w' -> dy = 1;
             case 's' -> dy = -1;
             case 'a' -> dx = -1;
             case 'd' -> dx = 1;
-            default -> {
-            }
+            default -> { }
         }
         int novoX = x + dx;
         int novoY = y + dy;
         if (novoX >= minX && novoX <= maxX && novoY >= minY && novoY <= maxY) {
-            x = novoX;
-            y = novoY;
+            this.x = novoX;
+            this.y = novoY;
         }
     }
 }

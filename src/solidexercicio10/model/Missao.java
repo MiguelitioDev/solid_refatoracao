@@ -42,6 +42,9 @@ public class Missao {
         inimigos.add(i);
     }
 
+    /**
+     * Localiza se ha um passageiro na mesma posicao da nave.
+     */
     public Passageiro passagemNaPosicao() {
         for (Passageiro p : passageiros) {
             if (mesmaPosicao(p, nave)) {
@@ -51,6 +54,9 @@ public class Missao {
         return null;
     }
 
+    /**
+     * Embarca o passageiro que estiver na posicao atual da nave, se houver vaga.
+     */
     public boolean embarcarPassageiroNaPosicao() {
         Passageiro p = passagemNaPosicao();
         if (p == null || nave.getPassageiros().size() >= nave.getCapacidade()) {
@@ -61,16 +67,24 @@ public class Missao {
         return true;
     }
 
+    /**
+     * Move os inimigos aleatoriamente dentro dos limites da missao.
+     */
     public void moverInimigos(Random r, int minX, int maxX, int minY, int maxY) {
         for (Inimigo i : inimigos) {
-            int dx = r.nextInt(3) - 1;
+            int dx = r.nextInt(3) - 1; // -1, 0 ou 1
             int dy = r.nextInt(3) - 1;
-            if (i.getX() + dx >= minX && i.getX() + dx <= maxX && i.getY() + dy >= minY && i.getY() + dy <= maxY) {
+            int novoX = i.getX() + dx;
+            int novoY = i.getY() + dy;
+            if (novoX >= minX && novoX <= maxX && novoY >= minY && novoY <= maxY) {
                 i.mover(dx, dy);
             }
         }
     }
 
+    /**
+     * Verifica se a nave colidiu com algum asteroide ou inimigo.
+     */
     public boolean verificaColisao() {
         for (Asteroide a : asteroides) {
             if (mesmaPosicao(a, nave)) {
@@ -85,6 +99,9 @@ public class Missao {
         return false;
     }
 
+    /**
+     * Indica se todos os passageiros foram resgatados do mapa.
+     */
     public boolean todosEmbarcados() {
         return passageiros.isEmpty();
     }
